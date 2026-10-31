@@ -1,5 +1,7 @@
 # BinSorter Pro
 
+<img src="docs/panel-premiere.png" alt="BinSorter Pro panel in Premiere Pro" width="300">
+
 Собственная панель для **Premiere Pro**, **After Effects**, **DaVinci Resolve** и **Unreal Engine**: раскладывает элементы проекта по бинам
 (в AE и Unreal Engine по папкам). Файлы на диске не трогает, перемещает только элементы внутри проекта.
 Одна панель и одно ядро на все приложения, значок `Pr` / `Ae` / `DR` в шапке показывает, где она открыта.
