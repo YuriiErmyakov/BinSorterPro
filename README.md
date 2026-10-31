@@ -10,6 +10,34 @@ Premiere Pro, After Effects, DaVinci Resolve и Unreal Engine — торговы
 > Внутренние имена (папка `ue/AutoSortBinsPro`, ID расширения `com.ourtools.autosortbins`, папка настроек
 > `%APPDATA%\AutoSortBinsPro`) остались от рабочего названия проекта. На работу это не влияет.
 
+---
+
+## English
+
+**BinSorter Pro** is a free, open-source panel that sorts your project into bins (folders) automatically.
+One panel and one sorting core for **Adobe Premiere Pro**, **After Effects**, **DaVinci Resolve Studio** and **Unreal Engine 5.6**.
+It never touches files on disk: only items inside the project are moved.
+
+- **Sort now**: scans the project and moves everything into category bins (Premiere: Video, Audio, Music, SFX, GFX, Mogrt, Proxies, Sequences, Nested Sequences, Other; After Effects: Comps, Precomps, Video, Images, Audio, Music, SFX, Solids, 3D, Other).
+- **Undo last sort**: puts items back, restores deleted empty bins and label colors. Keeps the last 5 sorts per project, survives restarts.
+- **Export report**: saves a `.txt` of what was moved and from where (or a preview if nothing was sorted yet).
+- **Auto-sort**: sorts new items while the panel is open; switched on per project.
+- Every category can be switched off, renamed (bin names can be paths like `01 Media/Video`) and given a label color.
+
+**Install (Windows)**
+
+```
+powershell -ExecutionPolicy Bypass -File install.ps1
+```
+
+Restart the app, then open the panel: *Window > Extensions > BinSorter Pro* (Premiere Pro, After Effects) or
+*Workspace > Workflow Integrations > BinSorter Pro* (DaVinci Resolve Studio). For Unreal Engine see `ue/install.bat`
+(it needs the Python Editor Script Plugin). Details are in the Russian sections below.
+
+Not affiliated with Adobe, Blackmagic Design or Epic Games. MIT license.
+
+---
+
 ## Установка
 
 ```
