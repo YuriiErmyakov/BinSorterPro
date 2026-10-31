@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AutoSortBins Pro</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="top">
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 30 22" aria-hidden="true">
+        <path class="f1" d="M1 6.5A2.5 2.5 0 0 1 3.5 4h4.2l2 2.4H15A2.5 2.5 0 0 1 17.5 9v8.5A2.5 2.5 0 0 1 15 20H3.5A2.5 2.5 0 0 1 1 17.500z"/>
+        <path class="f2" d="M7 5.500A2.500 2.500 0 0 1 9.500 3h4.200l2 2.400H21A2.500 2.500 0 0 1 23.500 8v8.500A2.500 2.500 0 0 1 21 19H9.500A2.500 2.500 0 0 1 7 16.500z"/>
+        <path class="f3" d="M13 4.500A2.500 2.500 0 0 1 15.500 2h4.200l2 2.400H27A2.500 2.500 0 0 1 29.500 7v8.500A2.500 2.500 0 0 1 27 18H15.500A2.500 2.500 0 0 1 13 15.500z"/>
+      </svg>
+      <span class="name">AutoSort<b>Bins</b><i>Pro</i></span>
+      <span id="hostBadge" class="badge"></span>
+    </div>
+    <div class="tools">
+      <button id="btnRescan" class="icon" title="Rescan the project">
+        <svg viewBox="0 0 16 16"><path d="M13.2 8a5.2 5.2 0 1 1-1.6-3.7M13.4 2.300v2.600h-2.600" fill="none" stroke="currentColor" stroke-width="1.500" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button id="btnSettings" class="icon" title="Settings">
+        <svg viewBox="0 0 16 16"><path d="M2 4.500h6M11.500 4.500H14M2 11.500h2.500M8 11.500h6" fill="none" stroke="currentColor" stroke-width="1.500" stroke-linecap="round"/><circle cx="9.700" cy="4.500" r="1.700" fill="none" stroke="currentColor" stroke-width="1.500"/><circle cx="6.200" cy="11.500" r="1.700" fill="none" stroke="currentColor" stroke-width="1.500"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div id="projLine" class="proj">Connecting…</div>
+
+  <div class="actions">
+    <button id="btnSort" class="primary" disabled><span id="sortText">Sort now</span><em id="sortCount" class="hidden"></em></button>
+    <div class="pair">
+      <button id="btnUndo" disabled title="Put the items of the last sort back where they were">Undo last sort</button>
+      <button id="btnReport" disabled title="Save the last sort as a .txt report">Export report</button>
+    </div>
+    <div class="auto" id="autoRow">
+      <label class="switch" title="Sort this project on its own whenever something new appears in it. Remembered per project">
+        <input type="checkbox" id="autoOn"><i></i><span>Auto-sort</span>
+      </label>
+      <span class="every">every <input id="autoSec" type="number" min="3" max="3600" step="1"> s</span>
+    </div>
+    <div id="progress" class="progress hidden"><div id="progFill"></div><span id="progText"></span></div>
+  </div>
+
+  <div class="sec"><span id="secTitle">Bins</span><span id="binsHint"></span></div>
+  <div id="cats" class="cats"></div>
+
+  <div id="status" class="status"></div>
+
+  <div id="sheet" class="sheet hidden">
+    <div class="sheetHead"><span>Settings</span><button id="btnClose" class="icon" title="Close"><svg viewBox="0 0 10 10"><path d="M1.500 1.500l7 7M8.500 1.500l-7 7" stroke="currentColor" stroke-width="1.500" stroke-linecap="round"/></svg></button></div>
+    <div class="sheetBody">
+      <div id="rootBox" class="hidden">
+        <div class="field col"><span>Folder to sort</span></div>
+        <div class="rootRow"><input id="optRoot" type="text" spellcheck="false"><button id="btnRootCur" title="Take the folder open in the Content Browser">Current</button></div>
+        <div class="note">Category folders are made inside it. Right-click a folder in the Content Browser &gt; <b>AutoSortBins Pro</b> does the same.</div>
+      </div>
+      <label class="field"><span>Sort</span>
+        <select id="optScope">
+          <option value="all" id="txtAll">The whole project</option>
+          <option value="root" id="txtRoot">Only loose items in the project root</option>
+        </select>
+      </label>
+      <label class="check line"><input type="checkbox" id="optEmpty"><i></i><span id="txtEmpty">Remove bins the sort has emptied</span></label>
+      <label class="check line"><input type="checkbox" id="optLabels"><i></i><span id="txtLabels">Color-label sorted items</span></label>
+
+      <div class="group">Audio without a telling name</div>
+      <div class="inline">SFX if shorter than <input id="optSfxMax" type="number" min="0" step="1"> s</div>
+      <div class="inline">Music if longer than <input id="optMusicMin" type="number" min="0" step="1"> s</div>
+      <div class="note">0 switches a rule off. Such audio then goes to Audio.</div>
+
+      <div class="group" id="grpWords">Words in file, folder and bin names</div>
+      <label class="field col"><span>SFX</span><textarea id="optSfxWords" rows="3" spellcheck="false"></textarea></label>
+      <label class="field col"><span>Music</span><textarea id="optMusicWords" rows="3" spellcheck="false"></textarea></label>
+      <label class="field col"><span>Voice (stays in Audio)</span><textarea id="optVoiceWords" rows="2" spellcheck="false"></textarea></label>
+
+      <div class="group" id="grpIgnore">Bins to leave alone</div>
+      <label class="field col"><textarea id="optIgnore" rows="2" spellcheck="false" placeholder="Bin names, comma-separated"></textarea></label>
+      <div class="note" id="noteBin">A bin name may be a path: <b>01 Media/Video</b> puts Video inside 01 Media.</div>
+    </div>
+    <div class="sheetFoot"><button id="btnReset">Reset to defaults</button><button id="btnDone" class="primary small">Done</button></div>
+  </div>
+</div>
+<script src="js/core.js"></script>
+<script src="js/cep.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

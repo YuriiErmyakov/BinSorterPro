@@ -1,0 +1,18 @@
+# Тестовые медиа и проекты (тяжёлые, генерируются скриптами test/make_media.js)
+test/media/
+test/*.prproj
+test/*.prin
+test/*.aep
+test/Adobe Premiere Pro Auto-Save/
+
+# Сборка Unreal Engine (собирается через ue/build.bat)
+ue/AutoSortBinsPro/Binaries/
+ue/AutoSortBinsPro/Intermediate/
+**/__pycache__/
+*.pyc
+
+# Служебное
+node_modules/
+*.log
+Thumbs.db
+.DS_Store

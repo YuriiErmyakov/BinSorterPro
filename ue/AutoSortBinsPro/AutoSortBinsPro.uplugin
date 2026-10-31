@@ -1,0 +1,23 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "AutoSortBins Pro",
+	"Description": "Sorts Content Browser assets into folders by type (Blueprints, Meshes, Materials, Textures, Audio...), with auto-sort, undo and a report. Same panel as AutoSortBins Pro for Premiere Pro, After Effects and DaVinci Resolve.",
+	"Category": "Editor",
+	"CreatedBy": "ourtools",
+	"CanContainContent": true,
+	"EnabledByDefault": true,
+	"IsBetaVersion": false,
+	"Modules": [
+		{
+			"Name": "AutoSortBinsPro",
+			"Type": "Editor",
+			"LoadingPhase": "PostEngineInit"
+		}
+	],
+	"Plugins": [
+		{ "Name": "PythonScriptPlugin", "Enabled": true },
+		{ "Name": "EditorScriptingUtilities", "Enabled": true }
+	]
+}
