@@ -1,4 +1,4 @@
-// AutoSortBins Pro - panel UI
+// BinSorter Pro - panel UI
 (function () {
 "use strict";
 
@@ -398,7 +398,7 @@ $("autoSec").onchange = function () {
 };
 $("autoSec").onkeydown = function (e) { if (e.key === "Enter") this.blur(); };
 // wording that depends on the host
-document.title = "AutoSortBins Pro";
+document.title = "BinSorter Pro";
 $("hostBadge").textContent = { ae: "Ae", dr: "DR", ue: "UE" }[H.APP] || "Pr";
 document.documentElement.className = "host-" + H.APP;
 if (H.APP === "ue") {

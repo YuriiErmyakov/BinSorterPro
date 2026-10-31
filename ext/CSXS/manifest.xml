@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ExtensionManifest Version="7.0" ExtensionBundleId="com.ourtools.autosortbins" ExtensionBundleVersion="1.1.0" ExtensionBundleName="AutoSortBins Pro"
+<ExtensionManifest Version="7.0" ExtensionBundleId="com.ourtools.autosortbins" ExtensionBundleVersion="1.1.0" ExtensionBundleName="BinSorter Pro"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ExtensionList>
     <Extension Id="com.ourtools.autosortbins.panel" Version="1.1.0" />
@@ -36,7 +36,7 @@
         </Lifecycle>
         <UI>
           <Type>Panel</Type>
-          <Menu>AutoSortBins Pro</Menu>
+          <Menu>BinSorter Pro</Menu>
           <Geometry>
             <Size><Height>560</Height><Width>300</Width></Size>
             <MinSize><Height>220</Height><Width>240</Width></MinSize>
@@ -62,7 +62,7 @@
         </Lifecycle>
         <UI>
           <Type>Panel</Type>
-          <Menu>AutoSortBins Pro</Menu>
+          <Menu>BinSorter Pro</Menu>
           <Geometry>
             <Size><Height>560</Height><Width>300</Width></Size>
             <MinSize><Height>220</Height><Width>240</Width></MinSize>

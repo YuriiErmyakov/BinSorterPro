@@ -1,9 +1,14 @@
-# AutoSortBins Pro
+# BinSorter Pro
 
 Собственная панель для **Premiere Pro**, **After Effects**, **DaVinci Resolve** и **Unreal Engine**: раскладывает элементы проекта по бинам
-(в AE по папкам). Сделана по образцу [AutoSortBinsPro с aescripts](https://aescripts.com/autosortbinspro/), в тех же
-тёмно-синих тонах. Файлы на диске не трогает, перемещает только элементы внутри проекта. Одна панель и одно ядро
-на все три приложения, значок `Pr` / `Ae` / `DR` в шапке показывает, где она открыта.
+(в AE и Unreal Engine по папкам). Файлы на диске не трогает, перемещает только элементы внутри проекта.
+Одна панель и одно ядро на все приложения, значок `Pr` / `Ae` / `DR` в шапке показывает, где она открыта.
+
+Бесплатный проект с открытым кодом ([MIT](LICENSE)). Не связан с Adobe, Blackmagic Design и Epic Games;
+Premiere Pro, After Effects, DaVinci Resolve и Unreal Engine — торговые марки их владельцев.
+
+> Внутренние имена (папка `ue/AutoSortBinsPro`, ID расширения `com.ourtools.autosortbins`, папка настроек
+> `%APPDATA%\AutoSortBinsPro`) остались от рабочего названия проекта. На работу это не влияет.
 
 ## Установка
 
@@ -20,8 +25,8 @@ powershell -ExecutionPolicy Bypass -File install.ps1
 
 | Приложение | Где |
 | --- | --- |
-| Premiere Pro, After Effects | Window > Extensions > AutoSortBins Pro |
-| DaVinci Resolve Studio | Workspace > Workflow Integrations > AutoSortBins Pro |
+| Premiere Pro, After Effects | Window > Extensions > BinSorter Pro |
+| DaVinci Resolve Studio | Workspace > Workflow Integrations > BinSorter Pro |
 
 Правки файлов в `ext` подхватываются после переоткрытия панели, правки манифестов только после перезапуска приложения.
 В Resolve панель открывается отдельным окном поверх остальных; нужна версия Studio.
@@ -92,8 +97,8 @@ powershell -ExecutionPolicy Bypass -File install.ps1
 
 Установка (один раз): `ue\build.bat 5.6` собирает C++ (в `C:\UEBuild`, MSVC не любит кириллицу в путях),
 `ue\install.bat 5.6` ставит ссылку `UE_5.6\Engine\Plugins\Marketplace\AutoSortBinsPro`; плагин включается во всех
-проектах 5.6, нужен включённый Python Editor Script Plugin. После перезапуска редактора: **Window > Tools > AutoSortBins Pro**,
-**Tools > AutoSortBins Pro** или правый щелчок по папке в Content Browser > **Sort with AutoSortBins Pro** (эта папка
+проектах 5.6, нужен включённый Python Editor Script Plugin. После перезапуска редактора: **Window > Tools > BinSorter Pro**,
+**Tools > BinSorter Pro** или правый щелчок по папке в Content Browser > **Sort with BinSorter Pro** (эта папка
 становится сортируемой и открывается панель). Правки в `ext` и Python подхватываются командой
 `import asb_ue; asb_ue.restart()` в Python-консоли редактора, правки C++ только после пересборки и перезапуска.
 
@@ -133,7 +138,7 @@ powershell -ExecutionPolicy Bypass -File install.ps1
 Без C++ части работает всё, кроме вкладки, цветов папок и чистки редиректоров; панель тогда открывается
 отдельным окном командой `import asb_ue; asb_ue.open_external()` в Python-консоли редактора.
 Вкладка, открытая плавающим окном, после перезапуска редактора сама не появляется (так Unreal обходится с плавающими
-окнами): **Tools > AutoSortBins Pro** или пристыкуйте её к раскладке.
+окнами): **Tools > BinSorter Pro** или пристыкуйте её к раскладке.
 
 ## Аудио: Music, SFX или Audio
 

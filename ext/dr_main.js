@@ -1,4 +1,4 @@
-// AutoSortBins Pro - Electron main process of the DaVinci Resolve Workflow Integration plugin.
+// BinSorter Pro - Electron main process of the DaVinci Resolve Workflow Integration plugin.
 // The window shows the same panel as in Premiere Pro and After Effects (index.html + js/main.js), with Node
 // switched on so that js/dr_link.js can start Resolve's fuscript and talk to the Media Pool.
 const { app, BrowserWindow, ipcMain, dialog } = require("electron");
@@ -22,7 +22,7 @@ function createWindow() {
   const b = loadBounds() || {};
   win = new BrowserWindow({
     x: b.x, y: b.y, width: b.width || 320, height: b.height || 640, minWidth: 250, minHeight: 260,
-    title: "AutoSortBins Pro", backgroundColor: "#060B17", alwaysOnTop: true, autoHideMenuBar: true,
+    title: "BinSorter Pro", backgroundColor: "#060B17", alwaysOnTop: true, autoHideMenuBar: true,
     webPreferences: { nodeIntegration: true, contextIsolation: false, sandbox: false }
   });
   win.setMenu(null);

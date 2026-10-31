@@ -1,4 +1,4 @@
-# AutoSortBins Pro for Unreal Engine - the host calls (the same call set as host_ae.jsx and dr/asb_server.lua).
+# BinSorter Pro for Unreal Engine - the host calls (the same call set as host_ae.jsx and dr/asb_server.lua).
 # The panel posts {fn, args} to asb_ue.py, which runs run(fn, args) here on the game thread.
 # Deciding what goes where happens in ext/js/core.js; this file only reads the Content Browser and moves assets.
 # "Bins" are folders inside the sort folder (settings root); ids are folder paths and asset package names.
@@ -245,7 +245,7 @@ def move(a):
     r = {"moved": 0, "missing": [], "failed": [], "ids": {}}
     at = unreal.AssetToolsHelpers.get_asset_tools()
     todo, sources = [], set()
-    with unreal.ScopedSlowTask(len(a["moves"]), "AutoSortBins Pro: preparing assets") as task:
+    with unreal.ScopedSlowTask(len(a["moves"]), "BinSorter Pro: preparing assets") as task:
         task.make_dialog_delayed(0.5)
         for m in a["moves"]:
             task.enter_progress_frame(1)

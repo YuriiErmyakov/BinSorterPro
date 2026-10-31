@@ -1,7 +1,7 @@
-# AutoSortBins Pro for Unreal Engine - backend inside the editor (started by init_unreal.py).
+# BinSorter Pro for Unreal Engine - backend inside the editor (started by init_unreal.py).
 #  * serves the shared panel UI (AutoSortBinsPro/ext) on 127.0.0.1 for the C++ tab (SWebBrowser);
 #  * answers the panel's host calls (asb_ue_host.py) on the game thread (slate post-tick queue);
-#  * adds "AutoSortBins Pro" to the Tools menu and to the Content Browser folder menu.
+#  * adds "BinSorter Pro" to the Tools menu and to the Content Browser folder menu.
 import json
 import os
 import queue
@@ -24,7 +24,7 @@ MIME = {".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=ut
 
 
 def log(msg):
-    unreal.log("[AutoSortBins Pro] " + msg)
+    unreal.log("[BinSorter Pro] " + msg)
 
 
 def ui_dir():
@@ -110,7 +110,7 @@ def make_handler(backend):
             u = urllib.parse.urlsplit(self.path)
             root = backend.ui
             if not root:
-                return self._send(500, "AutoSortBins Pro: UI folder not found (AutoSortBinsPro/ext)", "text/plain; charset=utf-8")
+                return self._send(500, "BinSorter Pro: UI folder not found (AutoSortBinsPro/ext)", "text/plain; charset=utf-8")
             rel = urllib.parse.unquote(u.path).lstrip("/") or "index.html"
             full = os.path.realpath(os.path.join(root, rel))
             if not full.startswith(os.path.realpath(root) + os.sep) or not os.path.isfile(full):
@@ -210,15 +210,15 @@ def _register_menus():
     try:
         menus = unreal.ToolMenus.get()
         m = menus.extend_menu("LevelEditor.MainMenu.Tools")
-        m.add_section("AutoSortBinsPro", "AutoSortBins Pro")
-        _entry(m, "AutoSortBinsPro", "AutoSortBinsOpen", "AutoSortBins Pro", "Sort Content Browser assets into folders by type",
+        m.add_section("AutoSortBinsPro", "BinSorter Pro")
+        _entry(m, "AutoSortBinsPro", "AutoSortBinsOpen", "BinSorter Pro", "Sort Content Browser assets into folders by type",
                "import asb_ue; asb_ue.open_panel()")
-        _entry(m, "AutoSortBinsPro", "AutoSortBinsExternal", "AutoSortBins Pro (separate window)",
+        _entry(m, "AutoSortBinsPro", "AutoSortBinsExternal", "BinSorter Pro (separate window)",
                "Open the panel in its own window", "import asb_ue; asb_ue.open_external()")
         f = menus.extend_menu("ContentBrowser.FolderContextMenu")
-        f.add_section("AutoSortBinsPro", "AutoSortBins Pro")
-        _entry(f, "AutoSortBinsPro", "AutoSortBinsFolder", "Sort with AutoSortBins Pro",
-               "Make this folder the one AutoSortBins Pro sorts and open the panel", "import asb_ue; asb_ue.sort_selected_folder()")
+        f.add_section("AutoSortBinsPro", "BinSorter Pro")
+        _entry(f, "AutoSortBinsPro", "AutoSortBinsFolder", "Sort with BinSorter Pro",
+               "Make this folder the one BinSorter Pro sorts and open the panel", "import asb_ue; asb_ue.sort_selected_folder()")
         menus.refresh_all_widgets()
     except Exception as ex:
         log("menu: %s" % ex)
@@ -236,7 +236,7 @@ def _hand_url_to_tab(b):
         elif state["t"] < 30:
             return
         else:
-            log("C++ module not loaded: use Tools > AutoSortBins Pro (separate window)")
+            log("C++ module not loaded: use Tools > BinSorter Pro (separate window)")
         unreal.unregister_slate_post_tick_callback(state["h"])
     state["h"] = unreal.register_slate_post_tick_callback(tick)
 

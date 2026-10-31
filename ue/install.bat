@@ -1,5 +1,5 @@
 @echo off
-rem AutoSortBins Pro for Unreal - links the plugin into the engine (all projects of that version get it).
+rem BinSorter Pro for Unreal - links the plugin into the engine (all projects of that version get it).
 rem Usage: install.bat [5.6]      uninstall: install.bat 5.6 remove
 rem The C++ binaries must be built for that engine version first (build.bat 5.6).
 setlocal
@@ -13,4 +13,4 @@ if /i "%2"=="remove" (
 )
 if not exist "C:\Program Files\Epic Games\UE_%VER%\Engine\Plugins\Marketplace" mkdir "C:\Program Files\Epic Games\UE_%VER%\Engine\Plugins\Marketplace"
 mklink /J "%DST%" "%~dp0AutoSortBinsPro"
-echo Restart Unreal Editor %VER%: Window ^> Tools ^> AutoSortBins Pro opens the panel.
+echo Restart Unreal Editor %VER%: Window ^> Tools ^> BinSorter Pro opens the panel.

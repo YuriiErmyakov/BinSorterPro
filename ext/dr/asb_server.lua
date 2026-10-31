@@ -1,4 +1,4 @@
--- AutoSortBins Pro for DaVinci Resolve - the Resolve side.
+-- BinSorter Pro for DaVinci Resolve - the Resolve side.
 -- Started by js/dr_link.js as:  fuscript.exe -l lua asb_server.lua   with ASB_DR_DIR set to a private folder.
 -- It stays connected to Resolve and answers one command at a time: dr_link.js writes command.lua
 -- (a Lua table: id, fn, args), this script writes result.json ({id, ok, data | error}).

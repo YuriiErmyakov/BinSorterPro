@@ -1,6 +1,6 @@
 {
     "name": "autosortbins-pro",
     "version": "1.2.0",
-    "description": "AutoSortBins Pro - Media Pool sorter panel for DaVinci Resolve (Workflow Integration plugin)",
+    "description": "BinSorter Pro - Media Pool sorter panel for DaVinci Resolve (Workflow Integration plugin)",
     "main": "dr_main.js"
 }

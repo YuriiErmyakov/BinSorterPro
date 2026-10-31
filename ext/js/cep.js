@@ -1,4 +1,4 @@
-// AutoSortBins Pro - the way into the host application: evalScript inside the panel, dev/server.js in a plain browser.
+// BinSorter Pro - the way into the host application: evalScript inside the panel, dev/server.js in a plain browser.
 (function () {
 "use strict";
 

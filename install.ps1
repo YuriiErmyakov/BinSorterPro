@@ -1,4 +1,4 @@
-# AutoSortBins Pro - installs the panel for the current user: Premiere Pro and After Effects (a CEP extension)
+# BinSorter Pro - installs the panel for the current user: Premiere Pro and After Effects (a CEP extension)
 # and DaVinci Resolve Studio (a Workflow Integration plugin). All three are links to the same "ext" folder.
 #   powershell -ExecutionPolicy Bypass -File install.ps1
 $ErrorActionPreference = "Stop"
@@ -33,5 +33,5 @@ if (Test-Path $resolve) {
 } else { Write-Host "DaVinci Resolve not found: skipped" }
 
 Write-Host "Done. Restart the application, then:"
-Write-Host "  Premiere Pro / After Effects: Window > Extensions > AutoSortBins Pro"
-Write-Host "  DaVinci Resolve Studio:       Workspace > Workflow Integrations > AutoSortBins Pro"
+Write-Host "  Premiere Pro / After Effects: Window > Extensions > BinSorter Pro"
+Write-Host "  DaVinci Resolve Studio:       Workspace > Workflow Integrations > BinSorter Pro"

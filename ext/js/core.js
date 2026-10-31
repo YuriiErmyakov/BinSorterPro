@@ -1,4 +1,4 @@
-// AutoSortBins Pro - everything that needs no host application: categories, rules, the sort plan, the report.
+// BinSorter Pro - everything that needs no host application: categories, rules, the sort plan, the report.
 // Loaded by the panel (window.ASBCore) and by node tests (module.exports).
 // One file serves Premiere Pro, After Effects and DaVinci Resolve: use("ppro"), use("ae") or use("dr") picks the profile.
 (function (root, factory) {
@@ -568,7 +568,7 @@ function plural(n, word) { return n + " " + word + (n === 1 ? "" : "s"); }
 function report(rec) {
   var L = [], by = {}, bins = {}, W = P.word;
   rec.moves.forEach(function (m) { (by[m.cat] = by[m.cat] || []).push(m); bins[key(m.to)] = true; });
-  L.push("AutoSortBins Pro for " + P.host + " - " + (rec.preview ? "sort preview (nothing has been moved)" : "sort report"));
+  L.push("BinSorter Pro for " + P.host + " - " + (rec.preview ? "sort preview (nothing has been moved)" : "sort report"));
   L.push("Project: " + (rec.project || ""));
   L.push("Date:    " + stamp(rec.t));
   if (!rec.preview) L.push("Mode:    " + (rec.auto ? "auto-sort" : "Sort now"));

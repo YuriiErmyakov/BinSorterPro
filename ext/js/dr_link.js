@@ -1,4 +1,4 @@
-// AutoSortBins Pro - the way into DaVinci Resolve (Node: the plugin window, the dev server and the tests use it).
+// BinSorter Pro - the way into DaVinci Resolve (Node: the plugin window, the dev server and the tests use it).
 // Resolve is scripted through its own fuscript.exe: this module starts dr/asb_server.lua once, keeps it running and
 // passes it one command at a time through two files in a private temp folder. Settings and undo history are kept here.
 "use strict";

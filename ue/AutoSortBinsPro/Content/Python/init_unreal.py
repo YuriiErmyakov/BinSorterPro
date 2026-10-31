@@ -1,4 +1,4 @@
-# AutoSortBins Pro - started automatically by the Python Editor Script Plugin when the editor opens.
+# BinSorter Pro - started automatically by the Python Editor Script Plugin when the editor opens.
 import unreal
 
 try:
@@ -6,4 +6,4 @@ try:
     asb_ue.start()
 except Exception:
     import traceback
-    unreal.log_error("[AutoSortBins Pro] backend failed to start:\n" + traceback.format_exc())
+    unreal.log_error("[BinSorter Pro] backend failed to start:\n" + traceback.format_exc())

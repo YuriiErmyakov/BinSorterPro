@@ -1,5 +1,5 @@
 @echo off
-rem AutoSortBins Pro for Unreal - builds the C++ module with RunUAT BuildPlugin and copies the binaries
+rem BinSorter Pro for Unreal - builds the C++ module with RunUAT BuildPlugin and copies the binaries
 rem back into AutoSortBinsPro\Binaries (the plugin folder itself is linked into the engine by install.bat).
 rem Usage: build.bat [5.6]   (engine version, default 5.6)
 setlocal

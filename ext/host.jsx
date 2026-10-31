@@ -1,4 +1,4 @@
-// AutoSortBins Pro for Premiere Pro - ExtendScript host. Keep pure ASCII.
+// BinSorter Pro for Premiere Pro - ExtendScript host. Keep pure ASCII.
 // The panel calls ASB.run("<fn>", "<json args>") and gets a JSON string {ok, data | error}.
 // Deciding what goes where happens in js/core.js; this file only reads the project and moves things.
 

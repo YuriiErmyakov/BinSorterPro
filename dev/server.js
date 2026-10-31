@@ -40,4 +40,4 @@ http.createServer(async (req, res) => {
   } catch (e) {
     send(res, 200, MIME[".json"], JSON.stringify({ ok: false, error: String(e && e.message || e) }));
   }
-}).listen(PORT, "127.0.0.1", () => console.log("AutoSortBins Pro dev panel (" + APP + (MOCK ? ", mock" : "") + "): http://localhost:" + PORT));
+}).listen(PORT, "127.0.0.1", () => console.log("BinSorter Pro dev panel (" + APP + (MOCK ? ", mock" : "") + "): http://localhost:" + PORT));

@@ -1,4 +1,4 @@
-// AutoSortBins Pro - editor module: a dockable "AutoSortBins Pro" tab hosting the shared panel UI
+// BinSorter Pro - editor module: a dockable "BinSorter Pro" tab hosting the shared panel UI
 // (AutoSortBinsPro/ext/index.html) in Unreal's web browser. Everything else - reading the Content Browser,
 // moving assets, settings and undo history - lives in the Python backend (Content/Python/asb_ue.py),
 // which serves the UI on 127.0.0.1 and hands us its address through UAutoSortBinsLibrary::SetPanelUrl.
@@ -49,7 +49,7 @@ namespace AutoSortBinsPanel
 				SNew(STextBlock)
 				.AutoWrapText(true)
 				.Justification(ETextJustify::Center)
-				.Text(LOCTEXT("Starting", "AutoSortBins Pro: starting the Python backend...\nIf this stays, enable the \"Python Editor Script Plugin\" and restart the editor."))
+				.Text(LOCTEXT("Starting", "BinSorter Pro: starting the Python backend...\nIf this stays, enable the \"Python Editor Script Plugin\" and restart the editor."))
 			];
 	}
 
@@ -102,7 +102,7 @@ namespace AutoSortBinsPanel
 		Box->SetContent(Url.IsEmpty() ? MakePlaceholder() : MakeBrowser());
 		return SNew(SDockTab)
 			.TabRole(ETabRole::NomadTab)
-			.Label(LOCTEXT("TabTitle", "AutoSortBins Pro"))
+			.Label(LOCTEXT("TabTitle", "BinSorter Pro"))
 			[
 				Box
 			];
@@ -211,7 +211,7 @@ public:
 		FSlateStyleRegistry::RegisterSlateStyle(*Style);
 
 		FGlobalTabmanager::Get()->RegisterNomadTabSpawner(SortTabName, FOnSpawnTab::CreateStatic(&SpawnTab))
-			.SetDisplayName(LOCTEXT("TabTitle", "AutoSortBins Pro"))
+			.SetDisplayName(LOCTEXT("TabTitle", "BinSorter Pro"))
 			.SetTooltipText(LOCTEXT("TabTip", "Sort Content Browser assets into folders by type"))
 			.SetGroup(WorkspaceMenu::GetMenuStructure().GetToolsCategory())
 			.SetIcon(FSlateIcon(Style->GetStyleSetName(), "AutoSortBinsPro.Icon"));

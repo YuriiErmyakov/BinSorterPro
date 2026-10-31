@@ -2,7 +2,7 @@
 <BlackmagicDesign>
     <Plugin>
         <Id>com.ourtools.autosortbins</Id>
-        <Name>AutoSortBins Pro</Name>
+        <Name>BinSorter Pro</Name>
         <Version>1.2</Version>
         <Description>Sorts the Media Pool into bins: video, audio, music, SFX, graphics, timelines. Auto-sort, undo, report.</Description>
         <FilePath>dr_main.js</FilePath>
