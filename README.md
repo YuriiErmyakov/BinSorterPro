@@ -2,12 +2,12 @@
 
 <img src="docs/panel-premiere.png" alt="BinSorter Pro panel in Premiere Pro" width="300">
 
-Собственная панель для **Premiere Pro**, **After Effects**, **DaVinci Resolve** и **Unreal Engine**: раскладывает элементы проекта по бинам
+Собственная панель для **Premiere Pro**, **After Effects**, **DaVinci Resolve**, **Unreal Engine** и **EffectCraft**: раскладывает элементы проекта по бинам
 (в AE и Unreal Engine по папкам). Файлы на диске не трогает, перемещает только элементы внутри проекта.
 Одна панель и одно ядро на все приложения, значок `Pr` / `Ae` / `DR` в шапке показывает, где она открыта.
 
-Бесплатный проект с открытым кодом ([MIT](LICENSE)). Не связан с Adobe, Blackmagic Design и Epic Games;
-Premiere Pro, After Effects, DaVinci Resolve и Unreal Engine — торговые марки их владельцев.
+Бесплатный проект с открытым кодом ([MIT](LICENSE)). Не связан с Adobe, Blackmagic Design, Epic Games и ArtCraft;
+Premiere Pro, After Effects, DaVinci Resolve, Unreal Engine и EffectCraft — торговые марки их владельцев.
 
 > Внутренние имена (папка `ue/AutoSortBinsPro`, ID расширения `com.ourtools.autosortbins`, папка настроек
 > `%APPDATA%\AutoSortBinsPro`) остались от рабочего названия проекта. На работу это не влияет.
@@ -17,7 +17,7 @@ Premiere Pro, After Effects, DaVinci Resolve и Unreal Engine — торговы
 ## English
 
 **BinSorter Pro** is a free, open-source panel that sorts your project into bins (folders) automatically.
-One panel and one sorting core for **Adobe Premiere Pro**, **After Effects**, **DaVinci Resolve Studio** and **Unreal Engine 5.6**.
+One panel and one sorting core for **Adobe Premiere Pro**, **After Effects**, **DaVinci Resolve Studio**, **Unreal Engine 5.6** and **[EffectCraft](https://getartcraft.com/apps/effectcraft)** (the free open-source compositor).
 It never touches files on disk: only items inside the project are moved.
 
 - **Sort now**: scans the project and moves everything into category bins (Premiere: Video, Audio, Music, SFX, GFX, Mogrt, Proxies, Sequences, Nested Sequences, Other; After Effects: Comps, Precomps, Video, Images, Audio, Music, SFX, Solids, 3D, Other).
@@ -36,7 +36,12 @@ Restart the app, then open the panel: *Window > Extensions > BinSorter Pro* (Pre
 *Workspace > Workflow Integrations > BinSorter Pro* (DaVinci Resolve Studio). For Unreal Engine see `ue/install.bat`
 (it needs the Python Editor Script Plugin). Details are in the Russian sections below.
 
-Not affiliated with Adobe, Blackmagic Design or Epic Games. MIT license.
+**EffectCraft** has its own edition, a ScriptUI panel in one file: download `BinSorterPro-EffectCraft-x.y.z.zip` from
+[Releases](../../releases/latest), then in EffectCraft choose *File > Scripts > Install ScriptUI Panel…*, pick
+`BinSorter Pro.jsx` and open *Window > BinSorter Pro.jsx*. It sorts like the After Effects version (same folders and rules),
+with Sort now, Undo, Rescan, Export report, Auto-sort and the category and option switches.
+
+Not affiliated with Adobe, Blackmagic Design, Epic Games or ArtCraft. MIT license.
 
 ---
 
@@ -169,6 +174,26 @@ powershell -ExecutionPolicy Bypass -File install.ps1
 отдельным окном командой `import asb_ue; asb_ue.open_external()` в Python-консоли редактора.
 Вкладка, открытая плавающим окном, после перезапуска редактора сама не появляется (так Unreal обходится с плавающими
 окнами): **Tools > BinSorter Pro** или пристыкуйте её к раскладке.
+
+## EffectCraft
+
+[EffectCraft](https://getartcraft.com/apps/effectcraft) — бесплатный композитор с открытым кодом, похожий на After Effects.
+Для него есть отдельная версия: одна ScriptUI-панель `effectcraft/BinSorterPro-EC.jsx`, в релизе она лежит в архиве
+`BinSorterPro-EffectCraft-x.y.z.zip` под именем `BinSorter Pro.jsx`.
+
+**Установка:** EffectCraft > *File > Scripts > Install ScriptUI Panel…* > выбрать `BinSorter Pro.jsx`
+(или скопировать файл в `%APPDATA%\EffectCraft\Scripts\ScriptUI Panels\`), затем *Window > BinSorter Pro.jsx*.
+
+Папки и правила те же, что в After Effects (Comps, Precomps, Video, Images, Audio, Music, SFX, Solids, 3D, Other).
+Кнопки: Sort now, Undo last sort (5 последних сортировок проекта), Rescan, Export report, Auto-sort с интервалом;
+категории включаются и переименовываются прямо в панели, там же область сортировки, удаление пустых папок,
+цветные метки и папки, которые не трогать.
+
+Как устроено: файл собирает `node tools/build_ec.mjs` из `ext/js/core.js`, `ext/host_ae.jsx` и
+`effectcraft/ui_ec.jsx`, поэтому логика сортировки та же, что в остальных версиях. Отличия от AE-хоста:
+в EffectCraft один класс `FootageSource` (солид определяется по типу элемента), настройки и история хранятся
+в настройках скриптов EffectCraft (`app.settings`), а не в файлах (запись файлов там по умолчанию выключена).
+Без разрешения на запись файлов (*Preferences > Scripting & Expressions*) отчёт показывается в окне, откуда его можно скопировать.
 
 ## Аудио: Music, SFX или Audio
 
