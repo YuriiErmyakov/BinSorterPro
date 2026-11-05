@@ -12,31 +12,80 @@ function call(fn, args) {
     });
 }
 
+// ------------------------------------------------------------ look (the navy theme of ext/style.css)
+function hex(h, a) { return [parseInt(h.substr(1, 2), 16) / 255, parseInt(h.substr(3, 2), 16) / 255, parseInt(h.substr(5, 2), 16) / 255, a == null ? 1 : a]; }
+var COL = { bg: hex("#060B17"), card: hex("#0E1A30"), line: hex("#223352"), text: hex("#E6EEFB"), dim: hex("#8FA1C0"),
+            accent: hex("#2F9BF0"), accent2: hex("#6FC3FF"), mint: hex("#5FE3B0"), warn: hex("#FFB454"), bad: hex("#FF7A8A") };
+function paint(el, color) { try { el.graphics.backgroundColor = el.graphics.newBrush(el.graphics.BrushType.SOLID_COLOR, color); } catch (e) {} }
+function ink(el, color) { try { el.graphics.foregroundColor = el.graphics.newPen(el.graphics.PenType.SOLID_COLOR, color, 1); } catch (e) {} }
+function bold(el, size) { try { el.graphics.font = ScriptUI.newFont(el.graphics.font.name, "BOLD", size); } catch (e) {} }
+function text(parent, t, color) { var s = parent.add("statictext", undefined, t); ink(s, color || COL.text); return s; }
+// a folder shape: body plus a tab on the top left
+function drawFolder(q, x, y, wd, ht, color) {
+    var b = q.newBrush(q.BrushType.SOLID_COLOR, color), tab = Math.round(ht * 0.28);
+    q.newPath(); q.rectPath(x, y, Math.round(wd * 0.45), tab + 1); q.fillPath(b);
+    q.newPath(); q.rectPath(x, y + tab, wd, ht - tab); q.fillPath(b);
+}
+function folderIcon(parent, color, wd, ht) {
+    var g = parent.add("group"); g.preferredSize = [wd, ht]; g.minimumSize = [wd, ht];
+    g.onDraw = function () { drawFolder(this.graphics, 0, Math.max(0, Math.round((this.size[1] - ht) / 2)), wd, ht, color); };
+    return g;
+}
+// a checkbox with its label as separate text, so EffectCraft does not centre it inside the row
+function check(parent, label) {
+    var g = parent.add("group"); g.alignChildren = ["left", "center"]; g.spacing = 4; g.alignment = ["fill", "center"];
+    var cb = g.add("checkbox", undefined, ""); cb.preferredSize.width = 18;
+    text(g, label);
+    return cb;
+}
+// the main action, drawn in the accent colour
+function primary(b) {
+    b.onDraw = function () {
+        var q = this.graphics, wd = this.size[0], ht = this.size[1], on = this.enabled !== false;
+        q.newPath(); q.rectPath(0, 0, wd, ht);
+        q.fillPath(q.newBrush(q.BrushType.SOLID_COLOR, on ? COL.accent : COL.line));
+        var f = q.font; try { f = ScriptUI.newFont(q.font.name, "BOLD", 13); } catch (e) {}
+        var m = q.measureString(this.text, f) || [0, 0];
+        q.drawString(this.text, q.newPen(q.PenType.SOLID_COLOR, [1, 1, 1, on ? 1 : 0.5], 1), Math.round((wd - m[0]) / 2), Math.round((ht - m[1]) / 2), f);
+    };
+}
+
 // ------------------------------------------------------------ UI
 var w = (thisObj instanceof Panel) ? thisObj : new Window("palette", "BinSorter Pro", undefined, { resizeable: true });
-w.orientation = "column"; w.alignChildren = ["fill", "top"]; w.spacing = 6; w.margins = 10;
-var hdr = w.add("statictext", undefined, "BINSORTER PRO for EffectCraft  v" + VERSION);
-try { hdr.graphics.font = ScriptUI.newFont(hdr.graphics.font.name, "BOLD", 13); } catch (e) {}
+w.orientation = "column"; w.alignChildren = ["fill", "top"]; w.spacing = 7; w.margins = 10;
+paint(w, COL.bg);
 
+var top = w.add("group"); top.alignChildren = ["left", "center"]; top.spacing = 0;
+var logo = top.add("group"); logo.preferredSize = [30, 20];
+logo.onDraw = function () {
+    var q = this.graphics;
+    drawFolder(q, 0, 4, 16, 12, hex("#3BA7F5")); drawFolder(q, 7, 2, 16, 12, hex("#F5B82E")); drawFolder(q, 14, 6, 16, 12, hex("#3DCB6C"));
+};
+top.add("group").preferredSize = [7, 4];
+var title = text(top, "BinSorter Pro", COL.accent2); bold(title, 14);
+text(top, "  EC  v" + VERSION, COL.dim);
+
+var bSort = w.add("button", undefined, "Sort now"); bSort.preferredSize.height = 32; primary(bSort);
 var row1 = w.add("group"); row1.alignChildren = ["fill", "center"];
-var bSort = row1.add("button", undefined, "Sort now"); bSort.alignment = ["fill", "center"];
-var bUndo = row1.add("button", undefined, "Undo last sort"); bUndo.alignment = ["fill", "center"];
-var row2 = w.add("group"); row2.alignChildren = ["fill", "center"];
-var bScan = row2.add("button", undefined, "Rescan"); bScan.alignment = ["fill", "center"];
-var bReport = row2.add("button", undefined, "Export report"); bReport.alignment = ["fill", "center"];
+var bUndo = row1.add("button", undefined, "Undo"); bUndo.alignment = ["fill", "center"]; bUndo.helpTip = "Undo the last sort (5 per project are kept)";
+var bScan = row1.add("button", undefined, "Rescan"); bScan.alignment = ["fill", "center"];
+var bReport = row1.add("button", undefined, "Report"); bReport.alignment = ["fill", "center"]; bReport.helpTip = "Export a .txt of what was moved";
 
-var gAuto = w.add("group"); gAuto.alignChildren = ["left", "center"];
-var cAuto = gAuto.add("checkbox", undefined, "Auto-sort this project every");
+var gAuto = w.add("group"); gAuto.alignChildren = ["left", "center"]; gAuto.spacing = 4;
+var cAuto = gAuto.add("checkbox", undefined, ""); cAuto.preferredSize.width = 18;
+text(gAuto, "Auto-sort this project every");
 var tSec = gAuto.add("edittext", undefined, "15"); tSec.preferredSize.width = 40;
-gAuto.add("statictext", undefined, "s");
+text(gAuto, "s", COL.dim);
 
 var pCats = w.add("panel", undefined, "Folders"); pCats.alignChildren = ["fill", "top"]; pCats.spacing = 3; pCats.margins = [8, 14, 8, 8];
+paint(pCats, COL.card); ink(pCats, COL.dim);
 var rows = {};
 C.CATS.forEach(function (c) {
-    var g = pCats.add("group"); g.alignChildren = ["left", "center"]; g.spacing = 4;
+    var g = pCats.add("group"); g.alignChildren = ["left", "center"]; g.spacing = 5; g.alignment = ["fill", "center"];
     var chk = g.add("checkbox", undefined, ""); chk.preferredSize.width = 18;
-    var name = g.add("edittext", undefined, c.bin); name.preferredSize.width = 140; name.helpTip = c.desc;
-    var n = g.add("statictext", undefined, ""); n.preferredSize.width = 60;
+    folderIcon(g, hex(c.color), 16, 12);
+    var name = g.add("edittext", undefined, c.bin); name.preferredSize.width = 130; name.helpTip = c.desc;
+    var n = text(g, "", COL.warn); n.preferredSize.width = 62;
     chk.onClick = function () { S.settings.cats[c.id].on = chk.value; changed(); };
     name.onChange = function () {
         var p = C.splitPath(name.text).join("/");
@@ -45,21 +94,23 @@ C.CATS.forEach(function (c) {
     rows[c.id] = { chk: chk, name: name, n: n };
 });
 
-var pOpt = w.add("panel", undefined, "Options"); pOpt.alignChildren = ["fill", "top"]; pOpt.spacing = 3; pOpt.margins = [8, 14, 8, 8];
+var pOpt = w.add("panel", undefined, "Options"); pOpt.alignChildren = ["fill", "top"]; pOpt.spacing = 4; pOpt.margins = [8, 14, 8, 8];
+paint(pOpt, COL.card); ink(pOpt, COL.dim);
 var dScope = pOpt.add("dropdownlist", undefined, ["Whole project", "Only loose items in the project root"]);
-var cEmpty = pOpt.add("checkbox", undefined, "Remove " + W + "s the sort has emptied");
-var cLabels = pOpt.add("checkbox", undefined, "Colour-label what gets sorted");
+var cEmpty = check(pOpt, "Remove " + W + "s the sort has emptied");
+var cLabels = check(pOpt, "Colour-label what gets sorted");
 var gIgn = pOpt.add("group"); gIgn.alignChildren = ["left", "center"];
-gIgn.add("statictext", undefined, "Leave alone:");
+text(gIgn, "Leave alone:", COL.dim);
 var tIgn = gIgn.add("edittext", undefined, ""); tIgn.preferredSize.width = 170; tIgn.helpTip = "Folder names the sort never touches, comma-separated";
 dScope.onChange = function () { S.settings.scope = dScope.selection && dScope.selection.index === 1 ? "root" : "all"; changed(); };
 cEmpty.onClick = function () { S.settings.removeEmpty = cEmpty.value; changed(); };
 cLabels.onClick = function () { S.settings.labels = cLabels.value; changed(); };
 tIgn.onChange = function () { S.settings.ignore = tIgn.text; changed(); };
 
-var status = w.add("statictext", undefined, "", { multiline: true }); status.preferredSize = [260, 46];
+var status = w.add("statictext", undefined, "", { multiline: true }); status.preferredSize = [260, 46]; ink(status, COL.dim);
 
-function say(text) { status.text = text; }
+// kind: "good" (mint), "bad" (red) or none (grey)
+function say(t, kind) { ink(status, kind === "good" ? COL.mint : kind === "bad" ? COL.bad : COL.dim); status.text = t; }
 function fill() {
     var st = S.settings;
     C.CATS.forEach(function (c) { rows[c.id].chk.value = !!st.cats[c.id].on; rows[c.id].name.text = st.cats[c.id].bin; });
@@ -72,7 +123,8 @@ function counts() {
     if (S.plan) S.plan.moves.forEach(function (m) { n[m.cat] = (n[m.cat] || 0) + 1; });
     C.CATS.forEach(function (c) { rows[c.id].n.text = n[c.id] ? n[c.id] + " to sort" : ""; });
     bUndo.enabled = S.history.length > 0;
-    bUndo.text = S.history.length ? "Undo last sort (" + S.history.length + ")" : "Undo last sort";
+    bUndo.text = S.history.length ? "Undo (" + S.history.length + ")" : "Undo";
+    bSort.text = S.plan && S.plan.pending ? "Sort now  (" + S.plan.pending + ")" : "Sort now";
 }
 
 // ------------------------------------------------------------ settings and history
@@ -94,7 +146,7 @@ function saveHistory() {
 function run(job) {
     if (S.busy) return;
     S.busy = true;
-    Promise.resolve().then(job).then(null, function (e) { say(String(e && e.message || e).replace(/^Error: /, "")); })
+    Promise.resolve().then(job).then(null, function (e) { say(String(e && e.message || e).replace(/^Error: /, ""), "bad"); })
         .then(function () { S.busy = false; counts(); });
 }
 function scan() {
@@ -107,7 +159,7 @@ function scan() {
 function sortNow(auto) {
     return scan().then(function () {
         var pl = S.plan;
-        if (!pl.pending) { if (!auto) say("Everything is already in its " + W + "."); return null; }
+        if (!pl.pending) { if (!auto) say("Everything is already in its " + W + ".", "good"); return null; }
         return C.execute(call, S.snap, pl, S.settings, { auto: auto }).then(function (rec) {
             var bins = {}, nb = 0, k, text;
             rec.moves.forEach(function (m) { bins[m.to.join("/").toLowerCase()] = true; });
@@ -117,7 +169,7 @@ function sortNow(auto) {
             if (rec.failed) text += ", " + rec.failed + " could not be moved";
             if (rec.moves.length) S.history.push(rec);
             return (rec.moves.length ? saveHistory() : Promise.resolve()).then(scan).then(function () { return call("sig"); })
-                .then(function (r) { S.cleanSig = r.sig; say(text + "."); });
+                .then(function (r) { S.cleanSig = r.sig; say(text + ".", rec.failed ? "bad" : "good"); });
         });
     });
 }
@@ -131,7 +183,7 @@ function undoLast() {
             var text = "Undone: " + C.plural(r.moved, "item") + " back in place";
             if (r.missing) text += ", " + r.missing + " no longer in the project";
             if (wasAuto) text += ". Auto-sort is off";
-            say(text + ".");
+            say(text + ".", r.missing ? "" : "good");
         });
     });
 }
@@ -145,7 +197,7 @@ function exportReport() {
         try {
             if (!/\.txt$/i.test(f.name)) f = File(f.fsName + ".txt");
             f.encoding = "UTF-8";
-            if (f.open("w")) { f.write(text); f.close(); say("Report saved: " + f.fsName); return; }
+            if (f.open("w")) { f.write(text); f.close(); say("Report saved: " + f.fsName, "good"); return; }
         } catch (e2) {}
     }
     // writing files is off (Preferences > Scripting & Expressions): show the text to copy instead
